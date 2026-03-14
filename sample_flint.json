@@ -1,0 +1,18 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Fact",
+  "flint:identifier": "urn:flint:fact:toetsingsinkomen:2026",
+  "flint:name": "ToetsingsinkomenThreshold",
+  "flint:sourceReference": "https://wetten.overheid.nl/BWBR0018472/2026-01-01/#hoofdstuk_2_artikel_2",
+  "flint:validityPeriod": {
+    "start": "2026-01-01T00:00:00Z",
+    "end": null
+  },
+  "flint:expression": {
+    "@type": "flint:Condition",
+    "flint:subject": "citizen.annual_income",
+    "flint:operator": "LESS_THAN_OR_EQUAL",
+    "flint:targetValue": 37496,
+    "flint:datatype": "xsd:decimal"
+  }
+}    
