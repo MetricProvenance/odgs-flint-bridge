@@ -1,5 +1,8 @@
 # ODGS FLINT Bridge
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![ODGS](https://img.shields.io/badge/ODGS-v5.0.0-0055AA)](https://github.com/MetricProvenance/odgs-protocol)
+
 The **Open Data Governance Standard (ODGS) FLINT Bridge** is an open-source institutional connector designed to unify the "Rules as Code" (Regels als Code) ecosystem. It bridges the gap between semantic legal ontology and executable, cryptographically verifiable governance.
 
 This package natively translates **TNO's FLINT** (Formal Language for the Interpretation of Normative Texts) Linked Data into **ODGS Executable Rules**.
@@ -9,7 +12,7 @@ This package natively translates **TNO's FLINT** (Formal Language for the Interp
 This bridge perfectly aligns the Dutch ecosystem's legal parsing with the ODGS protocol's enforcement mechanisms:
 
 1. **The Legislative Plane (TNO FLINT & Choppr):** TNO's open-source tools parse the human text of the law (e.g., from *wetten.overheid.nl*) and decompose it into a structured semantic truth (JSON-LD). This tells us *what the law means*.
-2. **The Physical Plane (ODGS Protocol):** The ODGS Execution Engine takes this semantic truth and mechanically enforces it against live IT systems (Databricks, Snowflake, AI Agents). 
+2. **The Physical Plane (ODGS Protocol):** The [ODGS Execution Engine](https://github.com/MetricProvenance/odgs-protocol) takes this semantic truth and mechanically enforces it against live IT systems (Databricks, Snowflake, AI Agents). 
 
 ### Administrative Recusal (The "Hard Stop")
 The core philosophy of ODGS is **Administrative Recusal**. If an AI agent or a legacy system attempts to process citizen data that does not perfectly conform to the rigorous FLINT definition mapped through this bridge, the ODGS Engine physically halts the pipeline to prevent "Black Box" liability. It generates an immutable cryptographic log citing the exact Dutch law that triggered the recusal.
