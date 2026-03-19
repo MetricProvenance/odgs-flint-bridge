@@ -1,0 +1,9 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Reference",
+  "flint:identifier": "urn:flint:ref:dora:art9:ref:nis2:art21",
+  "flint:name": "DORAtoNIS2CrossReference",
+  "flint:description": "DORA Art. 9 access control requirements are consistent with and supplement NIS2 Art. 21 security of network and information systems.",
+  "flint:sourceReference": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R2554#art_9",
+  "flint:refersTo": "urn:flint:act:nis2:art21:security_measures"
+}

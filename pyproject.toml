@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "odgs-flint-bridge"
-version = "0.1.0"
+version = "0.3.0"
 description = "Institutional Bridge: Compiling TNO FLINT (Regels als Code) into ODGS Executable Rules."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -20,10 +20,11 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
     "pydantic>=2.5.0",
-    "odgs>=5.0.0",
+    "odgs>=5.1.0",
 ]
 
 [project.optional-dependencies]
@@ -34,3 +35,6 @@ dev = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["odgs_flint_bridge"]
+
+[project.scripts]
+odgs-flint = "odgs_flint_bridge.cli:main"

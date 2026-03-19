@@ -1,0 +1,20 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Fact",
+  "flint:identifier": "urn:flint:fact:zorgtoeslag:art5:p1",
+  "flint:name": "ZorgtoeslagIncomeThreshold",
+  "flint:description": "Annual income of the applicant must not exceed the statutory threshold for Zorgtoeslag eligibility under Awb Art. 5(1).",
+  "flint:salvageClause": "Applicant income exceeds the threshold for Zorgtoeslag (€37,496). Application must be rejected and applicant notified per Art. 4:5 Awb.",
+  "flint:sourceReference": "https://wetten.overheid.nl/BWBR0018472/2026-01-01/#hoofdstuk_2_artikel_2",
+  "flint:validityPeriod": {
+    "start": "2026-01-01T00:00:00Z",
+    "end": null
+  },
+  "flint:expression": {
+    "@type": "flint:Condition",
+    "flint:subject": "citizen.annual_income",
+    "flint:operator": "LESS_THAN_OR_EQUAL",
+    "flint:targetValue": 37496,
+    "flint:datatype": "xsd:decimal"
+  }
+}

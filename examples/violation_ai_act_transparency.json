@@ -1,0 +1,17 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Violation",
+  "flint:identifier": "urn:flint:violation:ai_act:art13:transparency_breach",
+  "flint:name": "AIActTransparencyViolation",
+  "flint:description": "Triggered when an AI system has failed its Art. 13 transparency duty — audit log is absent or empty.",
+  "flint:salvageClause": "Immediate halt required. Submit incident report to national competent authority within 24 hours per EU AI Act Art. 73. System may not resume until transparency audit log is restored and independently verified.",
+  "flint:sourceReference": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689#art_73",
+  "flint:relatedDuty": "urn:flint:duty:ai_act:art13:transparency",
+  "flint:expression": {
+    "@type": "flint:Condition",
+    "flint:subject": "audit_log.record_count",
+    "flint:operator": "EQUALS",
+    "flint:targetValue": 0,
+    "flint:datatype": "xsd:integer"
+  }
+}

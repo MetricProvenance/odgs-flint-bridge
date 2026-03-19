@@ -1,0 +1,22 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Duty",
+  "flint:identifier": "urn:flint:duty:ai_act:art13:transparency",
+  "flint:name": "AIActTransparencyObligation",
+  "flint:description": "High-risk AI systems must provide transparent documentation of data governance decisions under EU AI Act Art. 13.",
+  "flint:salvageClause": "AI system has not maintained compliant audit logs. Processing must halt until Art. 13 transparency obligations are fulfilled.",
+  "flint:sourceReference": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689#art_13",
+  "flint:dutyHolder": "ai_system_operator",
+  "flint:claimant": "regulatory_authority",
+  "flint:period": {
+    "flint:start": "2026-08-02",
+    "flint:end": null
+  },
+  "flint:expression": {
+    "@type": "flint:Condition",
+    "flint:subject": "audit_log.record_count",
+    "flint:operator": "GREATER_THAN",
+    "flint:targetValue": 0,
+    "flint:datatype": "xsd:integer"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Source",
+  "flint:identifier": "urn:flint:source:awb:art5:p1",
+  "flint:name": "AlgemeneWetBestuursrechtArt5",
+  "flint:description": "Statutory source for Zorgtoeslag income threshold — Algemene wet bestuursrecht Art. 5(1).",
+  "flint:sourceReference": "https://wetten.overheid.nl/BWBR0018472/2026-01-01/#hoofdstuk_2_artikel_2",
+  "flint:citation": "Awb Art. 5, lid 1 — Wet zorgtoeslag",
+  "flint:body": "Het recht op zorgtoeslag bestaat slechts indien het toetsingsinkomen van de verzekeringsplichtige, bedoeld in artikel 2, niet meer bedraagt dan het drempelinkomen.",
+  "flint:jurisdiction": "NL",
+  "flint:language": "nl"
+}

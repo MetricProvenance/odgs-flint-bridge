@@ -1,0 +1,17 @@
+{
+  "@context": "https://flint.tno.nl/ontology/context.jsonld",
+  "@type": "flint:Act",
+  "flint:identifier": "urn:flint:act:dora:art9:access_control",
+  "flint:name": "DORAICTAccessControlAct",
+  "flint:description": "Only authorised ICT administrators may modify critical system configurations under DORA Art. 9(2).",
+  "flint:salvageClause": "Unauthorised configuration change detected. Incident must be logged and escalated to CISO per DORA Art. 19.",
+  "flint:sourceReference": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R2554#art_9",
+  "flint:actor": "ict_administrator",
+  "flint:object": "critical_system_configuration",
+  "flint:precondition": {
+    "flint:subject": "actor.authorisation_level",
+    "flint:operator": "GREATER_THAN_OR_EQUAL",
+    "flint:targetValue": 3
+  },
+  "flint:postcondition": "change_log.entry_created == True"
+}
