@@ -1,7 +1,7 @@
 # ODGS FLINT Bridge
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![ODGS](https://img.shields.io/badge/ODGS-v5.1.0-0055AA)](https://github.com/MetricProvenance/odgs-protocol)
+[![ODGS](https://img.shields.io/badge/ODGS-v5.1+_|_v6.0_Compatible-0055AA)](https://github.com/MetricProvenance/odgs-protocol)
 [![PyPI](https://img.shields.io/pypi/v/odgs-flint-bridge?label=PyPI&color=blue)](https://pypi.org/project/odgs-flint-bridge/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 

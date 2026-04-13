@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 adhering to [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-04-13
+
+### ✨ Added — ODGS v6.0 Compatibility
+
+- **Badge updated** to `v5.1+ | v6.0 Compatible` — signals forward compatibility with the ODGS Sovereign Validation Engine.
+- **`SOFT_STOP` severity:** While FLINT rules auto-assign severity by type (HARD_STOP, ACT_CONSTRAINT, METADATA_ONLY, LOG_ONLY), downstream consumers can now remap to `SOFT_STOP` using the v6.0 engine's override-gated severity.
+- **v6 schema validation verified** — all compiled FLINT rules pass against the expanded v6.0.0 `rule.schema.json`.
+
+### 🔗 Compatibility
+
+- Requires `odgs>=5.1.0` — works with both v5.x and v6.0 engines.
+- All changes are **additive, backward-compatible, and non-breaking**.
+
+---
+
 ## [0.3.0] - 2026-03-19
 
 ### ✨ Added — Full FLINT Type Coverage
