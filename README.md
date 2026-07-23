@@ -9,6 +9,12 @@ The **ODGS FLINT Bridge** is an open-source institutional connector that transla
 
 It bridges the semantic legal ontology layer with the ODGS enforcement engine — connecting "Rules as Code" (Regels als Code) ecosystems to live data pipelines.
 
+### See it in action
+
+[![Watch the FLINT bridge compile a GDPR Article 33 norm and enforce it](docs/demo/clip_flint_poster.jpg)](docs/demo/clip_flint.mp4)
+
+A GDPR Article 33 breach-notification norm is compiled into a real ES256-signed rule pack; a 30-hour notice is APPROVED, a 118-hour notice is HARD_STOP-blocked — real engine, real Ed25519 audit seal.
+
 ---
 
 ## Install
@@ -133,7 +139,7 @@ flowchart LR
 
 This package emits rules with `semantic_hash: "auto-computed"` — the SHA-256 is derived locally from the source payload. For **Registry-attested hashing** with sovereign Ed25519 signing (required for EU AI Act liability indemnification), upgrade to the Metric Provenance enterprise tier.
 
-👉 **[Sovereign Registry & Enterprise Law Packs](https://platform.metricprovenance.com)**
+👉 **[Sovereign Registry & Enterprise Law Packs](https://metricprovenance.com/pricing)**
 
 ---
 

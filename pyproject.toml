@@ -40,11 +40,20 @@ Repository = "https://github.com/MetricProvenance/odgs-flint-bridge"
 Documentation = "https://github.com/MetricProvenance/odgs-flint-bridge#readme"
 Changelog = "https://github.com/MetricProvenance/odgs-flint-bridge/blob/main/CHANGELOG.md"
 Issues = "https://github.com/MetricProvenance/odgs-flint-bridge/issues"
-"Partner Demo" = "https://platform.metricprovenance.com"
+"Sovereign Registry" = "https://registry.metricprovenance.com"
 "ODGS Core" = "https://pypi.org/project/odgs/"
 
 [tool.hatch.build.targets.wheel]
 packages = ["odgs_flint_bridge"]
+
+[tool.hatch.build.targets.sdist]
+# Demo video/poster live in the repo for the README + marketplace listing links,
+# excluded from the published sdist — pure bloat for `pip install`.
+exclude = [
+    "docs/demo/*.mp4",
+    "docs/demo/*.jpg",
+    "docs/demo/*.png",
+]
 
 [project.scripts]
 odgs-flint = "odgs_flint_bridge.cli:main"
