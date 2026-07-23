@@ -55,11 +55,18 @@ def main() -> None:
         print(f"Error: Invalid JSON in {args.input}: {e}", file=sys.stderr)
         sys.exit(1)
 
+    if not isinstance(flint_payload, dict):
+        print(
+            f"Error: {args.input} must contain a JSON object, got {type(flint_payload).__name__}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     # Parse and compile
     try:
-        parsed = FlintParser.parse_fact(flint_payload)
+        parsed = FlintParser.parse(flint_payload)
         rule = OdgsCompiler.compile_rule(parsed)
-    except (KeyError, ValueError) as e:
+    except (KeyError, ValueError, TypeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 

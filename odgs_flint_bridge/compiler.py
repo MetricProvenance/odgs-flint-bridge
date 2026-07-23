@@ -113,10 +113,22 @@ class OdgsCompiler:
         raw    = parsed["raw_payload"]
         suffix = OdgsCompiler._urn_suffix(raw)
         tv     = parsed["target_value"]
-        fmt_v  = f"'{tv}'" if isinstance(tv, str) else str(tv)
-        expr   = f"{parsed['target_field']} {parsed['operator']} {fmt_v}"
+        # For operators like IS_NULL/IS_NOT_NULL, the operator already encodes
+        # the null-check — appending str(None) produces a malformed expression
+        # (e.g. "field is None None"). Omit the value entirely when it's None.
+        if tv is None:
+            expr = f"{parsed['target_field']} {parsed['operator']}"
+        else:
+            fmt_v = f"'{tv}'" if isinstance(tv, str) else str(tv)
+            expr  = f"{parsed['target_field']} {parsed['operator']} {fmt_v}"
 
         rule = OdgsCompiler._base_rule(parsed, odgs_version, "HARD_STOP", expr, suffix)
+        # flint:Fact can declare a validity window too, not just flint:Duty —
+        # see parser._extract_validity_period().
+        if parsed.get("effective_from"):
+            rule["effective_from"] = parsed["effective_from"]
+        if parsed.get("effective_to"):
+            rule["effective_to"] = parsed["effective_to"]
         return rule
 
     # ------------------------------------------------------------------
@@ -130,9 +142,12 @@ class OdgsCompiler:
         # Logic expression only if we have a subject and operator
         expr: Optional[str] = None
         if parsed.get("target_field") and parsed.get("operator"):
-            tv    = parsed["target_value"]
-            fmt_v = f"'{tv}'" if isinstance(tv, str) else str(tv)
-            expr  = f"{parsed['target_field']} {parsed['operator']} {fmt_v}"
+            tv = parsed["target_value"]
+            if tv is None:
+                expr = f"{parsed['target_field']} {parsed['operator']}"
+            else:
+                fmt_v = f"'{tv}'" if isinstance(tv, str) else str(tv)
+                expr  = f"{parsed['target_field']} {parsed['operator']} {fmt_v}"
 
         rule = OdgsCompiler._base_rule(parsed, odgs_version, "HARD_STOP", expr, suffix)
 
@@ -173,7 +188,6 @@ class OdgsCompiler:
         if parsed.get("act_postcondition"):
             rule["act_postcondition"] = parsed["act_postcondition"]
 
-        # Acts default to LOG_ONLY until explicitly elevated — safe for initial rollout
         rule["verdict_on_pass"] = "PASS"
 
         return rule
@@ -237,8 +251,11 @@ class OdgsCompiler:
         tf  = parsed.get("target_field", "violation_subject")
         op  = parsed.get("operator", "!=")
         tv  = parsed.get("target_value")
-        fmt_v = f"'{tv}'" if isinstance(tv, str) else str(tv) if tv is not None else "None"
-        expr  = f"{tf} {op} {fmt_v}"
+        if tv is None:
+            expr = f"{tf} {op}"
+        else:
+            fmt_v = f"'{tv}'" if isinstance(tv, str) else str(tv)
+            expr  = f"{tf} {op} {fmt_v}"
 
         rule = OdgsCompiler._base_rule(parsed, odgs_version, "HARD_STOP", expr, suffix)
 

@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 adhering to [Semantic Versioning](https://semver.org/).
 
+## [0.4.1] - 2026-07-23
+
+### 🐛 Fixed
+
+- **CLI could only compile 2 of 6 documented FLINT types.** `cli.py` called the legacy `FlintParser.parse_fact()` (which only accepts `flint:Fact`/`flint:Duty`) instead of the `parse()` dispatcher added in v0.3.0. Compiling a `flint:Act`, `flint:Source`, `flint:Reference`, or `flint:Violation` payload failed with `Error: parse_fact() only accepts flint:Fact / flint:Duty`. Verified: all 6 example payloads in `examples/` now compile successfully.
+- **Malformed `logic_expression` for `IS_NULL`/`IS_NOT_NULL` operators.** `_compile_fact`, `_compile_duty`, and `_compile_violation` all appended `str(None)` even when the operator already encodes the null-check, producing expressions like `"field is None None"`. Now omits the value entirely when it's `None`, matching the guard pattern already correct in `parser.py`'s `_parse_act`.
+- **`flint:Fact` payloads silently dropped their validity window.** Only `_parse_duty` read `flint:period`/`flint:validityPeriod` — a `flint:Fact` with a declared validity window (like the shipped `sample_flint.json`) compiled without `effective_from`/`effective_to` at all. Extracted the shared logic into `_extract_validity_period()`, used by both parsers; `_compile_fact` now attaches the window to the output rule the same way `_compile_duty` already did. Verified: `sample_flint.json` now compiles with `effective_from: "2026-01-01"`.
+- **CLI only caught `(KeyError, ValueError)`** around parse/compile — a syntactically valid but structurally wrong top-level JSON input (e.g. a list or string instead of an object) raised an uncaught `AttributeError` with a raw traceback. Now validated explicitly with a clean error message.
+- **Removed the dead, unused `FlintBridge` class** (`main.py`) — not called from `cli.py`, not imported anywhere, no test coverage. It unconditionally attached a fake `"is_signed": True` attestation with a signature literally ending in `MOCK_SIGNATURE_DO_NOT_USE_IN_PROD`; a downstream integrator checking only the boolean (not the signature string) would have been told a rule was genuinely signed when it never was.
+- Removed a stale comment claiming Acts "default to LOG_ONLY" — the actual severity is `ACT_CONSTRAINT`, set a few lines above where the comment was.
+- `odgs_flint_bridge/__init__.py` was 0 bytes — no `__version__` exposed anywhere in the package, nothing re-exported at module level. Now exposes `__version__`, `FlintParser`, and `OdgsCompiler`.
+
+Verified: full test suite passes (39 passed, no change from baseline), plus a live CLI run against all 6 example payload types in `examples/`.
+
 ## [0.4.0] - 2026-04-13
 
 ### ✨ Added — ODGS v6.0 Compatibility

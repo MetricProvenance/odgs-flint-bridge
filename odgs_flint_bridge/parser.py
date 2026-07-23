@@ -75,6 +75,28 @@ def _require(payload: Dict[str, Any], key: str) -> Any:
     return val
 
 
+def _extract_validity_period(payload: Dict[str, Any]) -> tuple:
+    """Extract (effective_from, effective_to) as ISO date strings (or None),
+    reading flint:period first and falling back to the legacy
+    flint:validityPeriod shape used by some TNO tooling. Shared by both
+    flint:Fact and flint:Duty — a declared validity window shouldn't be
+    silently dropped just because a payload happens to be a Fact.
+    """
+    period = payload.get("flint:period", {})
+    effective_from = period.get("flint:start")
+    effective_to   = period.get("flint:end")
+
+    if not effective_from:
+        validity = payload.get("flint:validityPeriod", {})
+        effective_from = validity.get("start")
+        effective_to   = validity.get("end") or effective_to
+
+    return (
+        str(effective_from)[:10] if effective_from else None,
+        str(effective_to)[:10] if effective_to else None,
+    )
+
+
 class FlintParser:
     """Parses TNO FLINT JSON-LD payloads into a standardised ODGS intermediate dict."""
 
@@ -133,6 +155,11 @@ class FlintParser:
         flint_operator = expression.get("flint:operator")
         target_value  = expression.get("flint:targetValue")
 
+        # flint:Fact can declare a validity window too (not just flint:Duty) —
+        # previously silently dropped, which meant a declared flint:period on
+        # a Fact payload never made it into the compiled rule at all.
+        effective_from, effective_to = _extract_validity_period(payload)
+
         return {
             "flint_type":       "flint:Fact",
             "source_reference": source_ref,
@@ -141,6 +168,8 @@ class FlintParser:
             "target_value":     _coerce_value(target_value),
             "description":      payload.get("flint:description"),
             "salvage_clause":   payload.get("flint:salvageClause"),
+            "effective_from":   effective_from,
+            "effective_to":     effective_to,
             "raw_payload":      payload,
         }
 
@@ -156,15 +185,7 @@ class FlintParser:
         flint_operator = expression.get("flint:operator")
         target_value   = expression.get("flint:targetValue")
 
-        period = payload.get("flint:period", {})
-        effective_from = period.get("flint:start")
-        effective_to   = period.get("flint:end")
-
-        # Also check legacy flint:validityPeriod shape (used in some TNO tooling)
-        if not effective_from:
-            validity = payload.get("flint:validityPeriod", {})
-            effective_from = validity.get("start")
-            effective_to   = validity.get("end") or effective_to
+        effective_from, effective_to = _extract_validity_period(payload)
 
         return {
             "flint_type":       "flint:Duty",
@@ -172,8 +193,8 @@ class FlintParser:
             "target_field":     target_field,
             "operator":         _map_operator(flint_operator) if flint_operator else None,
             "target_value":     _coerce_value(target_value),
-            "effective_from":   str(effective_from)[:10] if effective_from else None,
-            "effective_to":     str(effective_to)[:10]   if effective_to   else None,
+            "effective_from":   effective_from,
+            "effective_to":     effective_to,
             "duty_holder":      payload.get("flint:dutyHolder"),
             "claimant":         payload.get("flint:claimant"),
             "description":      payload.get("flint:description"),
