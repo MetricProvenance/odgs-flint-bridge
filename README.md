@@ -137,9 +137,9 @@ flowchart LR
 
 ## Enterprise
 
-This package emits rules with `semantic_hash: "auto-computed"` — the SHA-256 is derived locally from the source payload. For **Registry-attested hashing** with sovereign Ed25519 signing (required for EU AI Act liability indemnification), upgrade to the Metric Provenance enterprise tier.
+This package emits rules with `semantic_hash: "auto-computed"` — the SHA-256 is derived locally from the source payload. For **Registry-attested hashing** with Ed25519 JWS signing and offline `.odgs-bundle` packages, see the Metric Provenance Enterprise Platform.
 
-👉 **[Sovereign Registry & Enterprise Law Packs](https://metricprovenance.com/pricing)**
+👉 **[Metric Provenance 3-Pillar Enterprise Suite](https://www.metricprovenance.com/#suite)**
 
 ---
 
